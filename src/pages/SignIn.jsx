@@ -8,19 +8,25 @@ function SignIn() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [uid, setUID] = useState(null);
+    // const title = document.getElementById("title")
 
-    // Create references for elements
+    // Creating references for elements
     const circleRef = useRef(null);
     const logoRef = useRef(null);
+    const titleRef = useRef(null);
 
     const handleEmailChange = (event) => {
+        if(titleRef.current){
+            titleRef.current.innerText = "Welcome Back"
+        }
         setEmail(event.target.value);
-        console.log(email);
     };
 
     const handlePasswordChange = (event) => {
+        if(titleRef.current){
+            titleRef.current.innerText = "Welcome Back"
+        }
         setPassword(event.target.value);
-        console.log(password);
     };
 
     const handleSignIn = () => {
@@ -31,14 +37,18 @@ function SignIn() {
             circleRef.current.style.animationIterationCount = "infinite";
             circleRef.current.style.animationTimingFunction = "ease-in-out";
         }
-
-        setTimeout(() => {
+        if(email ==="" || password ===""){
+            if(titleRef.current){
+                titleRef.current.innerText = "Please enter all details"
+            }
+            if (logoRef.current) {
+                logoRef.current.style.boxShadow = "0 0 50px #E02020";
+            }
+        }else{            
+            setTimeout(() => {
             signInWithEmailAndPassword(auth, email, password)
                 .then((user) => {
-                    console.log("Signed In");
-                    if (circleRef.current) {
-                        circleRef.current.style.boxShadow = "0 0 50px #21301E";
-                    }
+                    logoRef.current.style.boxShadow = "0 0 50px #21301E";
                     setUID(user.user.uid);
                 })
                 .catch(() => {
@@ -48,11 +58,14 @@ function SignIn() {
                     if (logoRef.current) {
                         logoRef.current.style.boxShadow = "0 0 50px #E02020";
                     }
+                    if(titleRef.current){
+                        titleRef.current.innerText = "Please enter correct details"
+                    }
                 });
-        }, 1000);
+            }, 100);
+        }
     };
 
-    console.log(uid);
     return (
         <>
             <div className='sign-in-div'>
@@ -61,9 +74,9 @@ function SignIn() {
                     <img src="src/image/logo.png" alt="logo" />
                 </div>
                 <div id='wlc'>
-                    <h3 style={{ color: '#ffffff' }}>Welcome Back</h3>
+                    <h3  id="title" style={{ color: '#ffffff' }} ref={titleRef}>Welcome Back</h3>
                     <div>
-                        <p>Don&#39;t have an account yet? 
+                        <p>Don&#39;t have an account yet?  <span>  </span> <span> </span>
                             <a className='links' href="Sign up">Sign up</a>
                         </p>
                     </div>
