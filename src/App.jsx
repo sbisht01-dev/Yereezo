@@ -1,12 +1,15 @@
-
-import './App.css'
-
+import { BrowserRouter, Route, Routes } from 'react-router'
+import Home from './pages/SignIn'
+import SignIn from './pages/SignIn'
 function App() {
 
   return (
-    <>
-     Flash Card porject start
-    </>
+    <BrowserRouter>
+      <Routes>
+        <Route path='signin' element={<SignIn />} />
+        <Route path='/' element={<Home />} />
+      </Routes>
+    </BrowserRouter>
   )
 }
 
