@@ -4,11 +4,11 @@ import '../styles/signin.css';
 import { useState, useRef } from 'react';
 
 function SignIn() {
+console.log(import.meta.env)
     const auth = getAuth(app);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [uid, setUID] = useState(null);
-    console.log(uid)
 
     // Creating references for elements
     const circleRef = useRef(null);
