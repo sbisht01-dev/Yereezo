@@ -36,7 +36,7 @@ function SignIn() {
             circleRef.current.style.animationIterationCount = "infinite";
             circleRef.current.style.animationTimingFunction = "ease-in-out";
         }
-        
+
         if(email ==="" || password ===""){
             if(titleRef.current){
                 titleRef.current.innerText = "Please enter all details"
@@ -48,7 +48,7 @@ function SignIn() {
             setTimeout(() => {
             signInWithEmailAndPassword(auth, email, password)
                 .then((user) => {
-                    logoRef.current.style.boxShadow = "0 0 50px #21301E";
+                    logoRef.current.style.boxShadow = "0 0 50px #486e41";
                     setUID(user.user.uid);
                 })
                 .catch(() => {
@@ -62,7 +62,7 @@ function SignIn() {
                         titleRef.current.innerText = "Please enter correct details"
                     }
                 });
-            }, 100);
+            }, 10);
         }
     };
 

@@ -76,6 +76,7 @@ body {
     background-image: url('src/image/circle.png');
     background-size: contain;
     background-repeat: no-repeat;
+    border-radius:50%;
     /* animation: circular-motion 1s both infinite ease-in-out; */
 }
 
