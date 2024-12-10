@@ -8,6 +8,7 @@ function SignIn() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [uid, setUID] = useState(null);
+    console.log(uid)
 
     // Creating references for elements
     const circleRef = useRef(null);
