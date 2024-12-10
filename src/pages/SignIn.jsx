@@ -8,7 +8,6 @@ function SignIn() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [uid, setUID] = useState(null);
-    // const title = document.getElementById("title")
 
     // Creating references for elements
     const circleRef = useRef(null);
@@ -37,6 +36,7 @@ function SignIn() {
             circleRef.current.style.animationIterationCount = "infinite";
             circleRef.current.style.animationTimingFunction = "ease-in-out";
         }
+        
         if(email ==="" || password ===""){
             if(titleRef.current){
                 titleRef.current.innerText = "Please enter all details"
