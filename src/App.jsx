@@ -1,13 +1,13 @@
 import { BrowserRouter, Route, Routes } from 'react-router'
-import Home from './pages/SignIn'
+import Home from './pages/Home'
 import SignIn from './pages/SignIn'
 function App() {
 
   return (
     <BrowserRouter>
       <Routes>
-        <Route path='signin' element={<SignIn />} />
-        <Route path='/' element={<Home />} />
+        {/* <Route path='/' element={<Home />} /> */}
+        <Route path='/' element={<SignIn />} />
       </Routes>
     </BrowserRouter>
   )
