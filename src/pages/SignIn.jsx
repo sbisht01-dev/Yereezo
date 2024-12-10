@@ -72,7 +72,7 @@ console.log(import.meta.env)
             <div className='sign-in-div'>
                 <div id='logo' ref={logoRef}>
                     <div id='border' ref={circleRef}></div>
-                    <img src="src/image/logo.png" alt="logo" />
+                    <img src="src/assets/image/logo.png" alt="logo" />
                 </div>
                 <div id='wlc'>
                     <h3  id="title" style={{ color: '#ffffff' }} ref={titleRef}>Welcome Back</h3>

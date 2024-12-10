@@ -73,7 +73,7 @@ body {
     z-index: 100;
     height: 80%;
     width: 80%;
-    background-image: url('src/image/circle.png');
+    background-image: url('src/assets/image/circle.png');
     background-size: contain;
     background-repeat: no-repeat;
     border-radius:50%;
