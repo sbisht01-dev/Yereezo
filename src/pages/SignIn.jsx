@@ -1,14 +1,12 @@
 import { app } from '../../firebase.js';
-import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
+import { getAuth, signInWithEmailAndPassword, sendPasswordResetEmail } from 'firebase/auth';
 import '../styles/signin.css';
 import { useState, useRef } from 'react';
 
 function SignIn() {
-console.log(import.meta.env)
     const auth = getAuth(app);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [uid, setUID] = useState(null);
 
     // Creating references for elements
     const circleRef = useRef(null);
@@ -16,15 +14,21 @@ console.log(import.meta.env)
     const titleRef = useRef(null);
 
     const handleEmailChange = (event) => {
-        if(titleRef.current){
+        if (titleRef.current) {
             titleRef.current.innerText = "Welcome Back"
+        }
+        if (circleRef.current) {
+            circleRef.current.style.animationName = "none";
         }
         setEmail(event.target.value);
     };
 
     const handlePasswordChange = (event) => {
-        if(titleRef.current){
+        if (titleRef.current) {
             titleRef.current.innerText = "Welcome Back"
+        }
+        if (circleRef.current) {
+            circleRef.current.style.animationName = "none";
         }
         setPassword(event.target.value);
     };
@@ -33,39 +37,63 @@ console.log(import.meta.env)
         if (circleRef.current) {
             circleRef.current.style.animationName = "circular-motion";
             circleRef.current.style.animationDuration = "1s";
-            circleRef.current.style.animationDirection = "alternate";
+            circleRef.current.style.animationDirection = "forwards";
             circleRef.current.style.animationIterationCount = "infinite";
             circleRef.current.style.animationTimingFunction = "ease-in-out";
         }
 
-        if(email ==="" || password ===""){
-            if(titleRef.current){
+        if (email === "" || password === "") {
+            if (titleRef.current) {
                 titleRef.current.innerText = "Please enter all details"
             }
             if (logoRef.current) {
                 logoRef.current.style.boxShadow = "0 0 50px #E02020";
             }
-        }else{            
+        } else {
             setTimeout(() => {
-            signInWithEmailAndPassword(auth, email, password)
-                .then((user) => {
-                    logoRef.current.style.boxShadow = "0 0 50px #486e41";
-                    setUID(user.user.uid);
-                })
-                .catch(() => {
-                    if (circleRef.current) {
-                        circleRef.current.style.animationName = "none";
-                    }
-                    if (logoRef.current) {
-                        logoRef.current.style.boxShadow = "0 0 50px #E02020";
-                    }
-                    if(titleRef.current){
-                        titleRef.current.innerText = "Please enter correct details"
-                    }
-                });
+                signInWithEmailAndPassword(auth, email, password)
+                    .then(() => {
+                        if (logoRef.current) {
+                            logoRef.current.style.boxShadow = "0 0 50px #486e41";
+                        }
+                    })
+                    .catch(() => {
+                        if (circleRef.current) {
+                            circleRef.current.style.animationName = "none";
+                        }
+                        if (logoRef.current) {
+                            logoRef.current.style.boxShadow = "0 0 50px #E02020";
+                        }
+                        if (titleRef.current) {
+                            titleRef.current.innerText = "Wrong Email or Password"
+                        }
+                    });
             }, 10);
         }
     };
+
+    const handlePasswordReset = () => {
+        console.log("Reset Mail function")
+        sendPasswordResetEmail(auth, email)
+            .then(() => {
+                if (titleRef.current) {
+                    titleRef.current.innerText = "Reset Email Sent"
+                }
+            })
+            .catch(() => {
+                if (email === "") {
+                    if (titleRef.current) {
+                        titleRef.current.innerText = "Enter your Email First"
+                    }
+                } else {
+                    if (titleRef.current) {
+                        titleRef.current.innerText = "Enter correct Email"
+                    }
+                }
+
+            });
+
+    }
 
     return (
         <>
@@ -75,7 +103,7 @@ console.log(import.meta.env)
                     <img src="src/assets/image/logo.png" alt="logo" />
                 </div>
                 <div id='wlc'>
-                    <h3  id="title" style={{ color: '#ffffff' }} ref={titleRef}>Welcome Back</h3>
+                    <h3 id="title" style={{ color: '#ffffff' }} ref={titleRef}>Welcome Back</h3>
                     <div>
                         <p>Don&#39;t have an account yet?  <span>  </span> <span> </span>
                             <a className='links' href="Sign up">Sign up</a>
@@ -84,24 +112,29 @@ console.log(import.meta.env)
                 </div>
                 <div className='details'>
                     <div className='credentials'>
-                        <input 
-                            className='input-box' 
-                            placeholder='Email' 
-                            type="text" 
-                            onChange={handleEmailChange} 
+                        <input
+                            className='input-box'
+                            placeholder='Email'
+                            type="text"
+                            onChange={handleEmailChange}
                         />
                     </div>
                     <div className='credentials'>
-                        <input 
-                            className='input-box' 
-                            placeholder='Password' 
-                            type="password" 
-                            onChange={handlePasswordChange} 
+                        <input
+                            className='input-box'
+                            placeholder='Password'
+                            type="password"
+                            onChange={handlePasswordChange}
+                            onKeyDown={(e) => {
+                                if (e.key === "Enter") {
+                                    handleSignIn()
+                                }
+                            }}
                         />
                     </div>
                 </div>
                 <div>
-                    <a href="" className='links'>Forgot Password?</a>
+                    <a className='links' onClick={handlePasswordReset}>Forgot Password?</a>
                 </div>
                 <button onClick={handleSignIn}>Sign In</button>
             </div>
