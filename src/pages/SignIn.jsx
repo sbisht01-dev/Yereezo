@@ -2,6 +2,7 @@ import { app } from '../../firebase.js';
 import { getAuth, signInWithEmailAndPassword, sendPasswordResetEmail, onAuthStateChanged } from 'firebase/auth';
 import '../styles/signin.css';
 import { useState, useRef, useEffect } from 'react';
+import logo from '../assets/image/logo.png'
 
 function SignIn() {
     // todo: sign up left 
@@ -128,7 +129,7 @@ function SignIn() {
             <div className='sign-in-div'>
                 <div id='logo' ref={logoRef}>
                     <div id='border' ref={circleRef}></div>
-                    <img src="src/assets/image/logo.png" alt="logo" />
+                    <img src={logo} alt="logo" />
                 </div>
                 <div id='wlc'>
                     <h3 id="title" style={{ color: '#ffffff' }} ref={titleRef}>Welcome Back</h3>
