@@ -17,7 +17,6 @@ body {
 
 .sign-in-div {
     font-family: "Manrope", sans-serif;
-    /* box-sizing: border-box; */
     background-color: rgb(24, 24, 24);
     display: flex;
     flex-direction: column;
@@ -26,10 +25,39 @@ body {
     padding: 40px 24px;
     border-top: 1px rgb(106, 106, 106) inset;
     border-radius: 12px;
-    /* height: 400px; */
     width: 350px;
     color: white;
-    gap: 16px
+    gap: 16px;
+    position: relative;
+}
+
+
+
+.sign-in-div:after {
+    content: "";
+    height: 60%;
+    width: 1px;
+    position: absolute;
+    z-index: 100;
+    left: -1px;
+    top: 65%;
+    transition: top, opacity;
+    transition-duration: 600ms;
+    transition-timing-function: ease;
+    background: linear-gradient(transparent,
+            rgb(39, 101, 132),
+            transparent);
+    opacity: 0;
+}
+
+.sign-in-div:after {
+    top: 55%;
+    opacity: 0;
+}
+
+.sign-in-div:hover:after {
+    top: 15%;
+    opacity: 1;
 }
 
 #logo {
@@ -43,23 +71,6 @@ body {
     position: relative;
     animation: breath 6s both infinite;
 }
-/* 
-@keyframes breath {
-    0% {
-        box-shadow: 0 0 0px rgb(4, 112, 181);
-
-    }
-
-    50% {
-        box-shadow: 0 0 30px rgb(4, 112, 181);
-
-    }
-
-    0% {
-        box-shadow: 0 0 0px rgb(4, 112, 181);
-
-    }
-} */
 
 
 
@@ -76,7 +87,7 @@ body {
     background-image: url('..//assets/image/circle.png');
     background-size: contain;
     background-repeat: no-repeat;
-    border-radius:50%;
+    border-radius: 50%;
     /* animation: circular-motion 1s both infinite ease-in-out; */
 }
 
@@ -136,7 +147,7 @@ div>.links {
     color: rgb(255, 255, 255);
     font-size: 14px;
     cursor: pointer;
-    
+
 }
 
 div>.links:hover {
@@ -159,8 +170,4 @@ div>.links:hover {
 .sign-in-div button:hover {
     box-shadow: 0px 0px 30px rgb(4, 122, 181);
     border: rgb(160, 215, 243) solid 2px;
-}
-
-input:focus-visible {
-    /* border: rgb(196, 20, 20) solid 1px inset; */
 }
