@@ -1,17 +1,32 @@
 import { app } from '../../firebase.js';
-import { getAuth, signInWithEmailAndPassword, sendPasswordResetEmail } from 'firebase/auth';
+import { getAuth, signInWithEmailAndPassword, sendPasswordResetEmail, onAuthStateChanged } from 'firebase/auth';
 import '../styles/signin.css';
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 
 function SignIn() {
+    // todo: sign up left 
+
     const auth = getAuth(app);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
-    // Creating references for elements
+    // Creating references for elements for visual feedback
     const circleRef = useRef(null);
     const logoRef = useRef(null);
     const titleRef = useRef(null);
+
+    // get email value reset visual feedback 
+    useEffect(() => {
+        const unsubscribe = onAuthStateChanged(auth, (user) => {
+            if (user) {
+                console.log("Signed In");
+            } else {
+                console.log("NO user Signed in");
+            }
+        })
+        return () => unsubscribe();
+    }, [auth])
+
 
     const handleEmailChange = (event) => {
         if (titleRef.current) {
@@ -23,6 +38,7 @@ function SignIn() {
         setEmail(event.target.value);
     };
 
+    // get password value reset visual feedback 
     const handlePasswordChange = (event) => {
         if (titleRef.current) {
             titleRef.current.innerText = "Welcome Back"
@@ -34,6 +50,7 @@ function SignIn() {
     };
 
     const handleSignIn = () => {
+        // animation for signin
         if (circleRef.current) {
             circleRef.current.style.animationName = "circular-motion";
             circleRef.current.style.animationDuration = "1s";
@@ -42,6 +59,7 @@ function SignIn() {
             circleRef.current.style.animationTimingFunction = "ease-in-out";
         }
 
+        // email & password field validation
         if (email === "" || password === "") {
             if (titleRef.current) {
                 titleRef.current.innerText = "Please enter all details"
@@ -49,15 +67,22 @@ function SignIn() {
             if (logoRef.current) {
                 logoRef.current.style.boxShadow = "0 0 50px #E02020";
             }
+            if (circleRef.current) {
+                circleRef.current.style.animationName = "none";
+            }
         } else {
+            // saving uid of user after successful singin
+            window.localStorage.clear();
             setTimeout(() => {
                 signInWithEmailAndPassword(auth, email, password)
-                    .then(() => {
+                    .then((user) => {
+                        window.localStorage.setItem("uid", user.user.uid)
                         if (logoRef.current) {
                             logoRef.current.style.boxShadow = "0 0 50px #486e41";
                         }
                     })
                     .catch(() => {
+                        // visual feedback on unsuccessful signin attempt
                         if (circleRef.current) {
                             circleRef.current.style.animationName = "none";
                         }
@@ -72,6 +97,7 @@ function SignIn() {
         }
     };
 
+    // password reset 
     const handlePasswordReset = () => {
         console.log("Reset Mail function")
         sendPasswordResetEmail(auth, email)
@@ -81,11 +107,13 @@ function SignIn() {
                 }
             })
             .catch(() => {
+                // validation for empty email field
                 if (email === "") {
                     if (titleRef.current) {
                         titleRef.current.innerText = "Enter your Email First"
                     }
                 } else {
+                    // validation for correct mail
                     if (titleRef.current) {
                         titleRef.current.innerText = "Enter correct Email"
                     }
