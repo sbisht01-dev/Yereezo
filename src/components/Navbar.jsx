@@ -31,7 +31,12 @@ function Navbar() {
     return (
         <>
             <nav className="navbar">
-                <div className='logo'><p>Doro</p></div>
+                <div className='nav-item'>
+                    <div className='logo'><p>Doro</p></div>
+                    <div className='item'>Explore</div>
+                    <div className='item'>Upload</div>
+
+                </div>
                 {(user === null)
                     ?
                     <div id='sign'>
@@ -41,10 +46,10 @@ function Navbar() {
                     :
                     (
                         <>
-                        <div id="sign">
-                            <div className="user-profile">{user.email}</div>
-                            <div className="sign" id='login' onClick={() => auth.signOut()}>Logout</div>
-                        </div>
+                            <div id="sign">
+                                <div className="user-profile">{user.email}</div>
+                                <div className="sign" id='login' onClick={() => auth.signOut()}>Logout</div>
+                            </div>
                         </>
 
                     )

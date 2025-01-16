@@ -4,18 +4,34 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font-family: "Sriracha", serif;
     font-weight: 400;
     font-style: normal;
     font-size: 1.2rem;
     padding: 0 4rem;
     margin-bottom: 1rem;
 }
+.nav-item{
+    display: flex;
+    /* width: 300px; */
+    gap: 32px;
+    align-items: baseline;
+    justify-content: space-between;
+}
+.item{
+    font-family: 'Roboto';
+    /* font-weight: bold; */
+    font-size: 16px;
+    color: rgb(15, 15, 15);
+    font-family: 'poppins';
+    cursor: pointer;
+}
 
 .logo {
+    font-family: "Sriracha", serif;
+
     display: flex;
     justify-content: center;
-    align-items: center;
+    /* align-items: center; */
     font-size: 1.4rem;
     cursor: pointer;
     font-weight: 500;
@@ -28,6 +44,8 @@
 }
 
 .sign {
+    font-family: "Sriracha", serif;
+
     padding: 6px 4px;
     background-color: rgba(255, 255, 255, 0);
     width: 120px;
