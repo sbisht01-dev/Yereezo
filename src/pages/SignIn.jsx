@@ -3,8 +3,9 @@ import { getAuth, signInWithEmailAndPassword, sendPasswordResetEmail, onAuthStat
 import '../styles/signin.css';
 import { useState, useRef, useEffect } from 'react';
 import logo from '../assets/image/logo.png'
-
+import { useNavigate } from 'react-router';
 function SignIn() {
+    const navigate = useNavigate();
     // todo: sign up left 
 
     const auth = getAuth(app);
@@ -21,6 +22,7 @@ function SignIn() {
         const unsubscribe = onAuthStateChanged(auth, (user) => {
             if (user) {
                 console.log("Signed In");
+                navigate('/home');
             } else {
                 console.log("NO user Signed in");
             }
@@ -126,47 +128,51 @@ function SignIn() {
 
     return (
         <>
-            <div className='sign-in-div'>
-                <div id='logo' ref={logoRef}>
-                    <div id='border' ref={circleRef}></div>
-                    <img src={logo} alt="logo" />
-                </div>
-                <div id='wlc'>
-                    <h3 id="title" style={{ color: '#ffffff' }} ref={titleRef}>Welcome Back</h3>
+            <div id='account-container'>
+
+                <div className='sign-in-div'>
+                    <div id='logo' ref={logoRef}>
+                        <div id='border' ref={circleRef}></div>
+                        <img src={logo} alt="logo" />
+                    </div>
+                    <div id='wlc'>
+                        <h3 id="title" style={{ color: '#ffffff' }} ref={titleRef}>Welcome Back</h3>
+                        <div>
+                            <p>Don&#39;t have an account yet?  <span>  </span> <span> </span>
+                                <a className='links' href="Sign up">Sign up</a>
+                            </p>
+                        </div>
+                    </div>
+                    <div className='details'>
+                        <div className='credentials'>
+                            <input
+                                className='input-box'
+                                placeholder='Email'
+                                type="text"
+                                onChange={handleEmailChange}
+                            />
+                        </div>
+                        <div className='credentials'>
+                            <input
+                                className='input-box'
+                                placeholder='Password'
+                                type="password"
+                                onChange={handlePasswordChange}
+                                onKeyDown={(e) => {
+                                    if (e.key === "Enter") {
+                                        handleSignIn()
+                                    }
+                                }}
+                            />
+                        </div>
+                    </div>
                     <div>
-                        <p>Don&#39;t have an account yet?  <span>  </span> <span> </span>
-                            <a className='links' href="Sign up">Sign up</a>
-                        </p>
+                        <a className='links' onClick={handlePasswordReset}>Forgot Password?</a>
                     </div>
+                    <button onClick={handleSignIn}>Sign In</button>
                 </div>
-                <div className='details'>
-                    <div className='credentials'>
-                        <input
-                            className='input-box'
-                            placeholder='Email'
-                            type="text"
-                            onChange={handleEmailChange}
-                        />
-                    </div>
-                    <div className='credentials'>
-                        <input
-                            className='input-box'
-                            placeholder='Password'
-                            type="password"
-                            onChange={handlePasswordChange}
-                            onKeyDown={(e) => {
-                                if (e.key === "Enter") {
-                                    handleSignIn()
-                                }
-                            }}
-                        />
-                    </div>
-                </div>
-                <div>
-                    <a className='links' onClick={handlePasswordReset}>Forgot Password?</a>
-                </div>
-                <button onClick={handleSignIn}>Sign In</button>
             </div>
+
         </>
     );
 }
