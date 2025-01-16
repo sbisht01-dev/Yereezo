@@ -12,7 +12,7 @@ function Navbar() {
         const unsubscribe = onAuthStateChanged(auth, (user) => {
             if (user) {
                 setUser(user);
-                console.log(user)
+                // console.log(user)
             } else {
                 setUser(null);
             }
