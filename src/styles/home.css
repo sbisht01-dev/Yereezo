@@ -1,0 +1,63 @@
+.navbar{
+    height: 80px;
+    width: 100vw;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    /* gap: 10rem; */
+    font-family: "Sriracha", serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 1.2rem;
+    padding: 0 2rem;
+}
+
+.logo{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.4rem;
+    cursor: pointer;
+    font-weight: 500    ;
+}
+
+#sign{
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.sign{
+    padding: 6px 4px;
+    background-color: rgba(255, 255, 255, 0);
+    width: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 120px;
+    /* border: 2px solid; */
+    cursor: pointer;
+}
+
+#login{
+    background-color: black;
+    color: white;
+}
+
+
+
+@media only screen and (max-width: 600px) {
+   .logo{
+    font-size: 1.6rem;
+   }
+    .navbar{
+    gap:8rem;
+   }
+   .sign{
+    padding: 4px 2px;
+   }
+   #signup{
+    display: none;
+   }
+}
