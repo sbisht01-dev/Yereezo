@@ -21,12 +21,39 @@ function Navbar() {
     }, [auth])
 
     const handleLogin = () => {
-        let login = document.getElementById("login")
-
-        login.addEventListener('click', () => {
-            navigate('/signin')
-        })
+        console.log('clicked')
+        navigate('/signin')
     }
+
+    const searchBar = document.getElementById('search-bar');
+
+    const observer = new IntersectionObserver(
+        (entries) => {
+            const entry = entries[0]; // Only observing one element
+
+            if (entry.isIntersecting) {
+                console.log('Element is in view!');
+            } else {
+                console.log('Element is out of view.');
+            }
+        },
+        {
+            root: null,
+            threshold: 0.1,
+        }
+    );
+    try {
+
+        observer.observe(searchBar)
+    } catch (error) {
+        console.log(error)
+    }
+    document.addEventListener('DOMContentLoaded', () => {
+        const searchBar = document.getElementById('search');
+        console.log(searchBar); // Should not be null
+    });
+
+
 
     return (
         <>
