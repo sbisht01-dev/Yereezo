@@ -25,7 +25,7 @@ function Navbar() {
         navigate('/signin')
     }
 
-    const searchBar = document.getElementById('search-bar');
+    const searchBar = document.getElementById('search-bar');    
 
     const observer = new IntersectionObserver(
         (entries) => {
@@ -48,10 +48,13 @@ function Navbar() {
     } catch (error) {
         console.log(error)
     }
-    document.addEventListener('DOMContentLoaded', () => {
-        const searchBar = document.getElementById('search');
-        console.log(searchBar); // Should not be null
-    });
+    window.onload = () =>{
+
+        // document.addEventListener('DOMContentLoaded', () => {
+            const searchBar = document.getElementById('search');
+            console.log(searchBar); // Should not be null
+        // });
+    }
 
 
 

@@ -1,5 +1,7 @@
 .navbar {
+    background-color: white;
     height: 80px;
+    width: 100%;
     box-sizing: border-box;
     display: flex;
     justify-content: space-between;
@@ -9,15 +11,21 @@
     font-size: 1.2rem;
     padding: 0 4rem;
     margin-bottom: 1rem;
+    position: sticky;
+    top: 0;
+    filter: backdrop(5);
+    z-index: 2000;
 }
-.nav-item{
+
+.nav-item {
     display: flex;
     /* width: 300px; */
     gap: 32px;
     align-items: baseline;
     justify-content: space-between;
 }
-.item{
+
+.item {
     font-family: 'Roboto';
     /* font-weight: bold; */
     font-size: 16px;
@@ -28,7 +36,7 @@
 
 .logo {
     font-family: "Sriracha", serif;
-
+    margin-right: 24px;
     display: flex;
     justify-content: center;
     /* align-items: center; */
@@ -152,4 +160,8 @@
     padding: 8px 20px;
     cursor: pointer;
     font-weight: bold;
+}
+
+body {
+    height: 3000px;
 }
