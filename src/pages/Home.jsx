@@ -1,51 +1,55 @@
 // import { useEffect } from "react";
-import { useState } from "react"
-import Footer from "../components/Footer"
-import Navbar from "../components/Navbar"
-import Catalogue from "../components/Catalogue"
-
+import { useState } from "react";
+import Footer from "../components/Footer";
+import Navbar from "../components/Navbar";
+import Catalogue from "../components/Catalogue";
+import useAuthStore from "../authstore";
 function Home() {
-    const [query, setQuery] = useState("")
-        const [uploadComp,setUploadComp]=useState(0);
-        
-        const handleUploadClickEvent = () =>{
-            setUploadComp(!uploadComp);
-            console.log(uploadComp)
-        }
+	const [query, setQuery] = useState("");
+	const [uploadComp, setUploadComp] = useState(0);
+	const uploadBox = useAuthStore((state) => state.uploadBox);
+	const handleUploadClickEvent = () => {
+		setUploadComp(!uploadComp);
+		console.log(uploadComp);
+	};
 
-    const handleQueryChange = (e) => {
-        setQuery(e.target.value) //this is asynchronous
-    }
+	const handleQueryChange = (e) => {
+		setQuery(e.target.value); //this is asynchronous
+	};
 
-    return (
+    console.log(uploadBox)
 
-        <>
-            <Navbar onUploadClick={handleUploadClickEvent}/>
-            <div className="main-container" id="main-container">
-                <div className="utility-container">
-                    <span id="tag-line">
-                        Share-Download-Inspire
-                    </span>
-                    <p>
-                        A hub for stunning wallpapers—upload, explore, and download your favorites. <br /> Discover and share creativity with the world!
-                    </p>
-                    <div className="search-container" >
-                        <input type="text" className="search" id="search-bar" placeholder="Search Wallpapers" value={query} onChange={(e) => handleQueryChange(e)} />
-                        <div id="search">Search</div>
-                    </div>
-                </div>
+	return (
+		<>
+			<Navbar onUploadClick={handleUploadClickEvent} />
+			<div className="main-container" id="main-container">
+				<div className="utility-container">
+					<span id="tag-line">Share-Download-Inspire</span>
+					<p>
+						A hub for stunning wallpapers—upload, explore, and download your
+						favorites. <br /> Discover and share creativity with the world!
+					</p>
+					<div className="search-container">
+						<input
+							type="text"
+							className="search"
+							id="search-bar"
+							placeholder="Search Wallpapers"
+							value={query}
+							onChange={(e) => handleQueryChange(e)}
+						/>
+						<div id="search">Search</div>
+					</div>
+				</div>
 
-                <Catalogue input = {query}/>
-            </div>
+				<Catalogue input={query} />
+			</div>
 
-
-
-            
-            <Footer />
-        </>
-    )
+			<Footer />
+		</>
+	);
 }
-export default Home
+export default Home;
 // window.onload = () => {
 //     const width = 800;
 //     let fileInput = document.getElementById('uplaoded-image');

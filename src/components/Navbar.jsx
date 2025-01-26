@@ -1,56 +1,54 @@
 import "../styles/home.css";
 import { app } from "../../firebase.js";
 import { useState, useEffect } from "react";
-import { onAuthStateChanged, getAuth } from "firebase/auth";
+import { getAuth } from "firebase/auth";
 import { useNavigate } from "react-router";
+import useAuthStore from "../authstore.js";
 
-function Navbar(onUploadClick) {
+function Navbar() {
 	const navigate = useNavigate();
 	const auth = getAuth(app);
-	const [user, setUser] = useState(null);
+	// const [user, setUser] = useState(null);
 	const [navSearch, setNavsearch] = useState(true);
 	const [query, setQuery] = useState("");
+	const user = useAuthStore((state) => state.user);
+	const setUploadBox = useAuthStore.getState().setUploadBox;
 
 	const handleQueryChange = (e) => {
 		setQuery(e.target.value); //this is asynchronous
 	};
-	useEffect(() => {
-		const unsubscribe = onAuthStateChanged(auth, (user) => {
-			if (user) {
-				setUser(user);
-			} else {
-				setUser(null);
-			}
-		});
-		return () => unsubscribe();
-	}, [auth]);
 
 	const handleLogin = () => {
-		console.log("clicked");
 		navigate("/signin");
 	};
 
-
 	useEffect(() => {
 		const handleScroll = () => {
-		  const hero = document.getElementById("search");
-		  if (hero) {
-			const heroBottom = hero.getBoundingClientRect().bottom;
-			if (heroBottom <= 0) {
-				console.log("Visible")
-				setNavsearch(false);
-				
-			} else {
-				setNavsearch(true);
+			const hero = document.getElementById("search");
+			if (hero) {
+				const heroBottom = hero.getBoundingClientRect().bottom;
+				if (heroBottom <= 0) {
+					console.log("Visible");
+					setNavsearch(false);
+				} else {
+					setNavsearch(true);
+				}
 			}
-		  }
 		};
-	
+
 		window.addEventListener("scroll", handleScroll);
 		return () => window.removeEventListener("scroll", handleScroll);
-	  }, []);
+	}, []);
 
-	  
+	const handleUpload = () => {
+		if (user) {
+			setUploadBox(true);
+		} else {
+			setUploadBox(false);
+			navigate("/signin");
+		}
+	};
+
 	return (
 		<>
 			<nav className="navbar">
@@ -72,8 +70,8 @@ function Navbar(onUploadClick) {
 						<li
 							className="item"
 							id="upload"
-							onClick={onUploadClick}
-							onKeyDown={onUploadClick}
+							onClick={handleUpload}
+							onKeyDown={handleUpload}
 						>
 							Upload
 						</li>
