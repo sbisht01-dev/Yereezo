@@ -6,13 +6,21 @@ import Catalogue from "../components/Catalogue"
 
 function Home() {
     const [query, setQuery] = useState("")
+        const [uploadComp,setUploadComp]=useState(0);
+        
+        const handleUploadClickEvent = () =>{
+            setUploadComp(!uploadComp);
+            console.log(uploadComp)
+        }
+
     const handleQueryChange = (e) => {
         setQuery(e.target.value) //this is asynchronous
     }
 
     return (
+
         <>
-            <Navbar />
+            <Navbar onUploadClick={handleUploadClickEvent}/>
             <div className="main-container" id="main-container">
                 <div className="utility-container">
                     <span id="tag-line">
@@ -29,6 +37,10 @@ function Home() {
 
                 <Catalogue input = {query}/>
             </div>
+
+
+
+            
             <Footer />
         </>
     )

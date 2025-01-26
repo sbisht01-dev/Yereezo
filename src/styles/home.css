@@ -1,3 +1,6 @@
+.wall-container{
+    height: 2000px;
+}
 .navbar {
     background-color: white;
     height: 80px;
@@ -13,8 +16,13 @@
     margin-bottom: 1rem;
     position: sticky;
     top: 0;
+    /* biome-ignore lint/correctness/noUnknownFunction: <explanation> */
     filter: backdrop(5);
     z-index: 2000;
+}
+
+ul {
+    list-style: none;
 }
 
 .nav-item {
@@ -26,11 +34,11 @@
 }
 
 .item {
-    font-family: 'Roboto';
+    font-family: 'Roboto', sans-serif;
     /* font-weight: bold; */
     font-size: 16px;
     color: rgb(15, 15, 15);
-    font-family: 'poppins';
+    font-family: 'poppins', sans-serif;
     cursor: pointer;
 }
 
@@ -43,6 +51,45 @@
     font-size: 1.4rem;
     cursor: pointer;
     font-weight: 500;
+}
+
+
+.nav-search {
+    width: 100%;
+    padding: 8px;
+    border: white;
+    border-radius: 40px;
+    position: relative;
+
+    box-shadow: inset 2px 4px 12px rgb(224, 224, 224);
+}
+
+.nav-search::placeholder {
+    color: rgb(184, 184, 184);
+}
+
+.nav-search-container {
+    /* width: 100%; */
+    padding: 16px;
+    border: white;
+    border-radius: 40px;
+    position: relative;
+}
+
+#nav-search-bar {
+    /* animation-name: appear; */
+    animation: appear both 0.3s ease-in-out;
+}
+
+@keyframes appear {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+
 }
 
 #sign {
@@ -108,7 +155,12 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+}
 
+.utility-container p {
+    font-family: 'poppins', sans-serif;
+    text-align: center;
+    color: rgb(44, 44, 44);
 }
 
 #tag-line {
@@ -116,10 +168,10 @@
     font-weight: bold;
     margin: 1rem 0;
     text-align: center;
-    font-family: "Nothing You Could Do", serif
+    font-family: "Nothing You Could Do", serif;
 }
 
-.utility-container p {
+.utility-container a {
     max-width: 650px;
     font-size: 18px;
     margin: 1rem 0;
