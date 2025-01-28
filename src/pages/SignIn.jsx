@@ -33,7 +33,7 @@ function SignIn() {
 			}
 		});
 		return () => unsubscribe();
-	}, [auth]);
+	}, [auth,navigate]);
 
 	const handleEmailChange = (event) => {
 		if (titleRef.current) {
@@ -183,7 +183,7 @@ function SignIn() {
 							Forgot Password?
 						</div>
 					</div>
-					<button onClick={handleSignIn} onKeyDown={handleSignIn}>
+					<button type="button" onClick={handleSignIn} onKeyDown={handleSignIn}>
 						Sign In
 					</button>
 				</div>

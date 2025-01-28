@@ -1,51 +1,106 @@
 // import { useEffect } from "react";
-import { useState } from "react"
-import Footer from "../components/Footer"
-import Navbar from "../components/Navbar"
-import Catalogue from "../components/Catalogue"
-
+import { useState } from "react";
+import Footer from "../components/Footer";
+import Navbar from "../components/Navbar";
+import Catalogue from "../components/Catalogue";
+import useAuthStore from "../authstore";
 function Home() {
-    const [query, setQuery] = useState("")
-        const [uploadComp,setUploadComp]=useState(0);
-        
-        const handleUploadClickEvent = () =>{
-            setUploadComp(!uploadComp);
-            console.log(uploadComp)
-        }
+	const [query, setQuery] = useState("");
+	const [uploadComp, setUploadComp] = useState(0);
+	const uploadBox = useAuthStore((state) => state.uploadBox);
+	const setUploadBox = useAuthStore.getState().setUploadBox;
+	const handleUploadClickEvent = () => {
+		setUploadComp(!uploadComp);
+		console.log(uploadComp);
+	};
 
-    const handleQueryChange = (e) => {
-        setQuery(e.target.value) //this is asynchronous
-    }
+	const handleQueryChange = (e) => {
+		setQuery(e.target.value); //this is asynchronous
+	};
 
-    return (
+	const [file, setFile] = useState(null);
 
-        <>
-            <Navbar onUploadClick={handleUploadClickEvent}/>
-            <div className="main-container" id="main-container">
-                <div className="utility-container">
-                    <span id="tag-line">
-                        Share-Download-Inspire
-                    </span>
-                    <p>
-                        A hub for stunning wallpapers—upload, explore, and download your favorites. <br /> Discover and share creativity with the world!
-                    </p>
-                    <div className="search-container" >
-                        <input type="text" className="search" id="search-bar" placeholder="Search Wallpapers" value={query} onChange={(e) => handleQueryChange(e)} />
-                        <div id="search">Search</div>
-                    </div>
-                </div>
+	// Handle file selection from click
+	const handleFileSelect = (event) => {
+		const selectedFile = event.target.files[0];
+		setFile(selectedFile);
+	};
 
-                <Catalogue input = {query}/>
-            </div>
+	// Handle drag over event (prevent default to allow drop)
+	const handleDragOver = (event) => {
+		event.preventDefault();
+	};
 
+	// Handle drop event
+	const handleDrop = (event) => {
+		event.preventDefault();
+		const droppedFile = event.dataTransfer.files[0];
+		setFile(droppedFile);
+	};
 
+	const handleUpload = () => {
+		setFile(null);
 
-            
-            <Footer />
-        </>
-    )
+		setUploadBox(false);
+	};
+
+	return (
+		<>
+			<Navbar onUploadClick={handleUploadClickEvent} />
+			<div className="main-container" id="main-container">
+				<div className="utility-container">
+					<span id="tag-line">Share-Download-Inspire</span>
+					<p>
+						A hub for stunning wallpapers—upload, explore, and download your
+						favorites. <br /> Discover and share creativity with the world!
+					</p>
+					<div className="search-container">
+						<input
+							type="text"
+							className="search"
+							id="search-bar"
+							placeholder="Search Wallpapers"
+							value={query}
+							onChange={(e) => handleQueryChange(e)}
+						/>
+						<div id="search">Search</div>
+					</div>
+				</div>
+
+				<Catalogue input={query} />
+			</div>
+			<Footer />
+			{uploadBox ? (
+				<div id="upload-box">
+					<div
+						style={{
+							border: "2px dashed #007BFF",
+							padding: "20px",
+							textAlign: "center",
+						}}
+						onDragOver={handleDragOver}
+						onDrop={handleDrop}
+					>
+						<h3>Drag & Drop or Click to Select a File</h3>
+
+						<input
+							type="file"
+							id="file-input"
+							onChange={handleFileSelect}
+							style={{ display: "none" }} // Hide default file input button
+						/>
+						{/* {file.name ? <p>File selected: {file.name}</p> : null} */}
+						<button type="button" onClick={handleUpload}>
+							Upload
+						</button>
+					</div>
+				</div>
+			) : null}
+		</>
+	);
 }
-export default Home
+export default Home;
+
 // window.onload = () => {
 //     const width = 800;
 //     let fileInput = document.getElementById('uplaoded-image');
