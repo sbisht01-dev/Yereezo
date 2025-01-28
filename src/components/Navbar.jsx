@@ -8,12 +8,11 @@ import useAuthStore from "../authstore.js";
 function Navbar() {
 	const navigate = useNavigate();
 	const auth = getAuth(app);
-	// const [user, setUser] = useState(null);
 	const [navSearch, setNavsearch] = useState(true);
 	const [query, setQuery] = useState("");
 	const user = useAuthStore((state) => state.user);
 	const setUploadBox = useAuthStore.getState().setUploadBox;
-
+	
 	const handleQueryChange = (e) => {
 		setQuery(e.target.value); //this is asynchronous
 	};
@@ -40,14 +39,10 @@ function Navbar() {
 		return () => window.removeEventListener("scroll", handleScroll);
 	}, []);
 
-	const handleUpload = () => {
-		if (user) {
-			setUploadBox(true);
-		} else {
-			setUploadBox(false);
-			navigate("/signin");
-		}
-	};
+	const handleUpload = () =>{
+		setUploadBox(true);
+	}
+	
 
 	return (
 		<>

@@ -8,6 +8,7 @@ function Home() {
 	const [query, setQuery] = useState("");
 	const [uploadComp, setUploadComp] = useState(0);
 	const uploadBox = useAuthStore((state) => state.uploadBox);
+	const setUploadBox = useAuthStore.getState().setUploadBox;
 	const handleUploadClickEvent = () => {
 		setUploadComp(!uploadComp);
 		console.log(uploadComp);
@@ -17,7 +18,31 @@ function Home() {
 		setQuery(e.target.value); //this is asynchronous
 	};
 
-    console.log(uploadBox)
+	const [file, setFile] = useState(null);
+
+	// Handle file selection from click
+	const handleFileSelect = (event) => {
+		const selectedFile = event.target.files[0];
+		setFile(selectedFile);
+	};
+
+	// Handle drag over event (prevent default to allow drop)
+	const handleDragOver = (event) => {
+		event.preventDefault();
+	};
+
+	// Handle drop event
+	const handleDrop = (event) => {
+		event.preventDefault();
+		const droppedFile = event.dataTransfer.files[0];
+		setFile(droppedFile);
+	};
+
+	const handleUpload = () => {
+		setFile(null);
+
+		setUploadBox(false);
+	};
 
 	return (
 		<>
@@ -44,12 +69,38 @@ function Home() {
 
 				<Catalogue input={query} />
 			</div>
-
 			<Footer />
+			{uploadBox ? (
+				<div id="upload-box">
+					<div
+						style={{
+							border: "2px dashed #007BFF",
+							padding: "20px",
+							textAlign: "center",
+						}}
+						onDragOver={handleDragOver}
+						onDrop={handleDrop}
+					>
+						<h3>Drag & Drop or Click to Select a File</h3>
+
+						<input
+							type="file"
+							id="file-input"
+							onChange={handleFileSelect}
+							style={{ display: "none" }} // Hide default file input button
+						/>
+						{/* {file.name ? <p>File selected: {file.name}</p> : null} */}
+						<button type="button" onClick={handleUpload}>
+							Upload
+						</button>
+					</div>
+				</div>
+			) : null}
 		</>
 	);
 }
 export default Home;
+
 // window.onload = () => {
 //     const width = 800;
 //     let fileInput = document.getElementById('uplaoded-image');

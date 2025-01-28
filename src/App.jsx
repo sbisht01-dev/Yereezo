@@ -19,6 +19,7 @@ function App() {
 				displayName: user.displayName,
 				photoURL: user.photoURL,
 			});
+			
 		} else {
 			// User is signed out, clear the global state
 			clearUser();
@@ -27,7 +28,7 @@ function App() {
 	return (
 		<BrowserRouter>
 			<Routes>
-				<Route path="home" element={<Home />} />
+				<Route path="/" element={<Home />} />
 				<Route path="signin" element={<SignIn />} />
 			</Routes>
 		</BrowserRouter>
